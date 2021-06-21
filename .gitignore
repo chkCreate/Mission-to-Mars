@@ -1,3 +1,9 @@
+# Documents to excude
+Practice.ipynb
+scraping.py
+Mission_to_Mars.ipynb
+index.html
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
