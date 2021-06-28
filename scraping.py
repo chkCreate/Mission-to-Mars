@@ -17,6 +17,7 @@ def scrape_all():
     data = {
       "news_title": news_title,
       "news_paragraph": news_paragraph,
+      "hemispheres": hemisphere_info(browser),
       "featured_image": featured_image(browser),
       "facts": mars_facts(),
       "last_modified": dt.datetime.now()
@@ -91,6 +92,30 @@ def mars_facts():
     # Convert df back to html-ready code.
     return df.to_html(classes="table table-striped")
 
+def hemisphere_info(browser):
+    #Use browser to visit the URL 
+    url = 'https://marshemispheres.com/'
+    browser.visit(url)
+
+    try:
+        hemisphere_image_urls = []
+        links = browser.find_by_css('a.product-item img')
+        title = browser.find_by_css('h3.title')
+
+        for image in range(len(links)): 
+            hemispheres = {}
+            browser.find_by_css('a.product-item img')[image].click()
+            sample_elem = browser.links.find_by_text('Sample').first
+            hemispheres['img_url'] = sample_elem['href']
+            hemispheres['title'] = browser.find_by_css('h2.title').text
+            hemisphere_image_urls.append(hemispheres)
+            browser.back()
+            
+    except BaseException:
+        return None
+    return hemisphere_image_urls
+
 if __name__ == "__main__":
+
     # If running as script, print scraped data
     print(scrape_all())
