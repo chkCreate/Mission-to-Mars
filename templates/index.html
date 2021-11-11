@@ -4,28 +4,30 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title style="color:orange;">Mission to Mars</title>
+    <title>Scraping Mission to Mars Information</title>
     <link
       rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-    />
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
   </head>
-  <body style ="background-color: red;">
+  
+  <body style ="background-color: rgba(10, 10, 10, 0.856);" style="color: aliceblue;">
     <div class="container">
       <!-- Add Jumbotron to Header -->
       <div class="jumbotron text-center">
-        <h1>Mission to Mars</h1>
+        <h1>Mission to Mars Update</h1>
         <!-- Add a button to activate scraping script -->
         <p><a class="btn btn-primary btn-lg" href="/scrape" role="button">Scrape New Data</a></p>
       </div>
 
       <!-- Add section for Mars News -->
-      <div class="row" id="mars-news">
+      <div class="row" id="mars-news" style="color: aliceblue;">
         <div class="col-md-12">
+          <h2 class="heading"><strong>Lastest Mars News</strong></h2>
           <div class="media">
             <div class="media-body">
-              <h2 style="color:aliceblue;">Latest Mars News</h2>
-              <h4 class="media-heading">{{ mars.news_title }}</h4>
+                <h4 style="color: aliceblue;" class="media-heading">{{mars.news_title}}</h4>
               <p>{{ mars.news_paragraph }}</p>
             </div>
           </div>
@@ -33,7 +35,7 @@
       </div>
 
       <!-- Section for Featured Image and Facts table -->
-      <div class="row" id="mars-featured-image">
+      <div class="row" id="mars-featured-image" style="color: aliceblue;">
         <div class="col-md-8">
           <h2>Featured Mars Image</h2>
 
@@ -45,25 +47,36 @@
           />
         </div>
 
-        <div class="col-md-4">
-          <!-- Mars Facts -->
-          <div class="row" id="mars-facts">
-            <h4>Mars Facts</h4>
-            {{ mars.facts | safe }}
+        <!-- Mars Facts -->
+        <div class="col-md-4">  
+          <div class="row" id="mars-facts" style="color: aliceblue;">
+            <h2>Mars Facts</h2>
+              {{ mars.facts | safe }}
           </div>
         </div>
       </div>
 
+      <!-- weather -->
+      <div class="row" id="mars-weather" style="color: aliceblue;">
+        <div class="col-md-12" >
+          <h2>Current Weather on Mars</h2>
+          <hr size=2>
+          <div class="panel-body">
+            <p>{{mars.weather_tweets}}</p>
+          </div>
+        </div>  
+      </div>
+
       <!-- Section for Mars Hemispheres -->
-      <div class="row" id="mars-hemispheres">
+      <div class="row" id="mars-hemispheres" style="color: aliceblue;">
         <div class="page-header">
-          <h2 class="text-center">Mars Hemispheres</h2>
+          <h2 class="text-center" style="color: aliceblue;">Mars Hemispheres</h2>
         </div>
 
         {% for hemisphere in mars.hemispheres %}
         <div class="col-md-6">
           <div class="thumbnail">
-            <img src="{{hemisphere.img_url | default('static/images/error.png', true)}}" alt="...">
+            <img src="{{hemisphere_img_urls | default('static/images/error.png', true)}}" alt="...">
             <div class="caption">
               <h3>{{hemisphere.title}}</h3>
             </div>

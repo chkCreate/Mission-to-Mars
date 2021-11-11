@@ -6,6 +6,7 @@ import pandas as pd
 import datetime as dt
 from webdriver_manager.chrome import ChromeDriverManager
 
+
 def scrape_all():
     # Initiate headless driver for deployment
     executable_path = {'executable_path': ChromeDriverManager().install()}
@@ -20,7 +21,8 @@ def scrape_all():
       "hemispheres": hemisphere_info(browser),
       "featured_image": featured_image(browser),
       "facts": mars_facts(),
-      "last_modified": dt.datetime.now()
+      "last_modified": dt.datetime.now(),
+      "weather_tweets": mars_weather(browser)
     }
 
     # Stop webdriver and return data
@@ -30,7 +32,7 @@ def scrape_all():
 def mars_news(browser):
     # Scrape Mars News
     # Visit the mars nasa news site
-    url = 'https://data-class-mars.s3.amazonaws.com/Mars/index.html'
+    url = 'https://mars.nasa.gov/news/'
     browser.visit(url)
 
     # Optional delay for loading the page
@@ -46,11 +48,11 @@ def mars_news(browser):
         # Use the parent element to find the first `a` tag and save it as `news_title`
         news_title = slide_elem.find('div', class_='content_title').get_text()
         # Use the parent element to find the paragraph text
-        news_p = slide_elem.find('div', class_='article_teaser_body').get_text()
+        news_paragraph = slide_elem.find('div', class_='article_teaser_body').get_text()
     except AttributeError:
         return None, None
 
-    return news_title, news_p
+    return news_title, news_paragraph
 
 ### Featured Images
 def featured_image(browser):
@@ -77,6 +79,28 @@ def featured_image(browser):
 
     return img_url
 
+### Mars Weather
+def mars_weather(browser):
+    #Use browser to visit the URL 
+    url = 'https://twitter.com/marswxreport?lang=en'
+    browser.visit(url)
+
+    # Parse the resulting html with soup
+    html = browser.html
+    weather_soup = soup(html, 'html.parser')
+
+    try:
+        # Find the relative weather tweet content
+        weather = weather_soup.find_all('div', class_='js-tweet-text-container')
+        weather_mars = []
+        for content in weather:
+            tweet = content.find("p", class_="TweetTextSize TweetTextSize--normal js-tweet-text tweet-text").text
+            weather_mars.append(tweet)
+    except AttributeError:
+        return None
+
+    return weather_mars
+
 ### Mars Facts
 def mars_facts():
     try:
@@ -100,7 +124,7 @@ def hemisphere_info(browser):
     try:
         hemisphere_image_urls = []
         links = browser.find_by_css('a.product-item img')
-        title = browser.find_by_css('h3.title')
+        title = browser.find_by_css('h2.title')
 
         for image in range(len(links)): 
             hemispheres = {}
