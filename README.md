@@ -3,6 +3,8 @@
 ## Background
 Web-scraped images of Mars’s hemispheres and its titles using tools like BeautifulSoup and Splinter. Stored the scraped data on a Mongo database and Flask, used a web application to display the data, and altered the design of the web app to accommodate these images.
 
+---
+
 ### Scraping
 
 Complete initial scraping using Jupyter Notebook, BeautifulSoup, Pandas, and Requests/Splinter.
@@ -18,10 +20,6 @@ Scraped the JPL Featured Space Image [here](https://data-class-jpl-space.s3.amaz
 #### Mars Facts
 Scraped the Mars Facts webpage [here](https://galaxyfacts-mars.com) and use Pandas to scrape the table containing facts about the planet including Diameter, Mass, etc. Use Pandas to convert the data to a HTML table string.
 
-#### Mars Weather
-Scraped the Mars Weather from twitter account [here](https://twitter.com/marswxreport?lang=en).
-
-
 #### Mars Hemispheres
 Scraped the USGS Astrogeology site [here](https://marshemispheres.com/) to obtain high resolution images for each of Mar's hemispheres.
 
@@ -29,8 +27,7 @@ Scraped the USGS Astrogeology site [here](https://marshemispheres.com/) to obtai
 ### MongoDB and Flask Application
 Used MongoDB with Flask templating to create an HTML page that displays all of the information that was scraped from the URLs above.
 
-![final_app_part1.png](Images/final_app_part1.png)
-![final_app_part2.png](Images/final_app_part2.png)
+![Sample_page.png](Images/Sample_page.png)
 
 - - -
 
