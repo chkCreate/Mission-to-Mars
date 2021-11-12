@@ -22,7 +22,6 @@ def scrape_all():
       "featured_image": featured_image(browser),
       "facts": mars_facts(),
       "last_modified": dt.datetime.now(),
-      "weather_tweets": mars_weather(browser)
     }
 
     # Stop webdriver and return data
@@ -79,28 +78,6 @@ def featured_image(browser):
 
     return img_url
 
-### Mars Weather
-def mars_weather(browser):
-    #Use browser to visit the URL 
-    url = 'https://twitter.com/marswxreport?lang=en'
-    browser.visit(url)
-
-    # Parse the resulting html with soup
-    html = browser.html
-    weather_soup = soup(html, 'html.parser')
-
-    try:
-        # Find the relative weather tweet content
-        weather = weather_soup.find_all('div', class_='js-tweet-text-container')
-        weather_mars = []
-        for content in weather:
-            tweet = content.find("p", class_="TweetTextSize TweetTextSize--normal js-tweet-text tweet-text").text
-            weather_mars.append(tweet)
-    except AttributeError:
-        return None
-
-    return weather_mars
-
 ### Mars Facts
 def mars_facts():
     try:
@@ -112,6 +89,7 @@ def mars_facts():
     # Assign columns and set index of dataframe
     df.columns=['description', 'Mars', 'Earth']
     df.set_index('description', inplace=True)
+    df.index.name=None
 
     # Convert df back to html-ready code.
     return df.to_html(classes="table table-striped")
