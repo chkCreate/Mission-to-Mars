@@ -27,7 +27,7 @@ Scraped the USGS Astrogeology site [here](https://marshemispheres.com/) to obtai
 ### MongoDB and Flask Application
 Used MongoDB with Flask templating to create an HTML page that displays all of the information that was scraped from the URLs above.
 
-![Sample_page](https://github.com/chkCreate/Mission-to-Mars/blob/main/images/Sample_page.png)
+![Sample_page.png](Images/Sample_page.PNG)
 
 - - -
 
